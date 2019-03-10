@@ -1,5 +1,6 @@
 import unicodecsv
 import numpy as np
+import matplotlib.pyplot as plt
 from datetime import datetime as dt
 from collections import defaultdict
 
@@ -75,7 +76,23 @@ def describe_data(data):
     print 'Minimum:', np.around(np.min(data), decimals=2)
     print 'Maximum:', np.around(np.max(data), decimals=2)
 
+def describe_data_hist(data):
+    print 'Mean:', np.mean(data)
+    print 'Standard deviation:', np.std(data)
+    print 'Minimum:', np.min(data)
+    print 'Maximum:', np.max(data)
+    plt.hist(data)
+    plt.show()
 
+print('')
+print('########################')
+print('Exercicio 1')
+print('########################')
+#####################################
+## Read in the data from daily_engagement.csv and project_submissions.csv
+## and store the results in the below variables.
+## Then look at the first row of each table.
+#####################################
 enrollments = read_csv('enrollments.csv')
 daily_engagement = read_csv('daily_engagement.csv')
 project_submissions = read_csv('project_submissions.csv')
@@ -111,8 +128,10 @@ print(enrollments[0])
 print(daily_engagement[0])
 print(project_submissions[0])
 
-print('\n########################\n')
-
+print('')
+print('########################')
+print('Exercicio 2')
+print('########################')
 ## Find the total number of rows and the number of unique students (account keys)
 ## in each table.
 
@@ -156,6 +175,11 @@ print('\n########################\n')
 # total_project_submissions: 3642
 # submissions_unique: 743
 
+print('')
+print('########################')
+print('Exercicio 3')
+print('########################')
+# Rename the "acct" column in the daily_engagement table to "account_key".
 for engagement_record in daily_engagement:
     if 'acct' in engagement_record:
         engagement_record['account_key'] = engagement_record['acct']
@@ -184,8 +208,10 @@ print('engagements_unique: {}'.format(engagements_unique))
 print('total_project_submissions: {}'.format(total_project_submissions))
 print('submissions_unique: {}'.format(submissions_unique))
 
-print('\n########################\n')
-
+print('')
+print('########################')
+print('Exercicio 4')
+print('########################')
 ## Find any one student enrollments where the student is missing from the daily engagement table.
 ## Output that enrollment.
 for enrollment in enrollments:
@@ -194,19 +220,11 @@ for enrollment in enrollments:
         print(enrollment)
         break
 
-print('\n########################\n')
 
-#####################################
-## Find any one student enrollments where the student is missing from the daily engagement table.
-## Output that enrollment.
-for enrollment in enrollments:
-    student = enrollment['account_key']
-    if student not in unique_engagement_students:
-        print(enrollment)
-        break
-
-print('\n########################\n')
-
+print('')
+print('########################')
+print('Exercicio 5')
+print('########################')
 ## Find the number of surprising data points (enrollments missing from
 ## the engagement table) that remain, if any.
 num_problem_students = 0
@@ -217,8 +235,6 @@ for enrollment in enrollments:
         num_problem_students += 1
 
 print('num_problem_students: {}' . format(num_problem_students))
-
-print('\n########################\n')
 
 ## Find the number of surprising data points (enrollments missing from
 ## the engagement table) that remain, if any.
@@ -252,8 +268,13 @@ print('non_udacity_enrollments: {}' . format(len(non_udacity_enrollments)))
 print('non_udacity_engagement: {}' . format(len(non_udacity_engagement)))
 print('non_udacity_submissions: {}' . format(len(non_udacity_submissions)))
 
-print('\n########################\n')
-
+print('')
+print('########################')
+print('Exercicio 6')
+print('########################')
+## Create a dictionary named paid_students containing all students who either
+## haven't canceled yet or who remained enrolled for more than 7 days. The keys
+## should be account keys, and the values should be the date the student enrolled.
 paid_students = {}
 for enrollment in non_udacity_enrollments:
     if (not enrollment['is_canceled'] or enrollment['days_to_cancel'] > 7):
@@ -264,6 +285,10 @@ for enrollment in non_udacity_enrollments:
 
 print('paid_students: {}' . format(len(paid_students)))
 
+print('')
+print('########################')
+print('Exercicio 7')
+print('########################')
 ## Create a list of rows from the engagement table including only rows where
 ## the student is one of the paid students you just found, and the date is within
 ## one week of the student's join date.
@@ -317,8 +342,10 @@ print('Standard deviation: {}' . format(np.std(total_minutes)))
 print('Minimum: {}' . format(np.min(total_minutes)))
 print('Maximum: {}' . format(np.max(total_minutes)))
 
-print('\n########################\n')
-
+print('')
+print('########################')
+print('Exercicio 8')
+print('########################')
 ## Go through a similar process as before to see if there is a problem.
 ## Locate at least one surprising piece of data, output it, and take a look at it.
 
@@ -336,10 +363,11 @@ for engagement_record in paid_engagement_in_first_week:
     if engagement_record['account_key'] == student_with_max_minutes:
         print('engagement_record: {}' . format(engagement_record))
 
-print('\n########################\n')
 
-
-
+print('')
+print('########################')
+print('Exercicio 9')
+print('########################')
 ## Adapt the code above to find the mean, standard deviation, minimum, and maximum for
 ## the number of lessons completed by each student during the first week. Try creating
 ## one or more functions to re-use the code above.
@@ -355,8 +383,10 @@ describe_data(total_minutes_by_account.values())
 lessons_completed_by_account = sum_grouped_items(engagement_by_account, 'lessons_completed')
 describe_data(lessons_completed_by_account.values())
 
-print('\n########################\n')
-
+print('')
+print('########################')
+print('Exercicio 10')
+print('########################')
 ## Find the mean, standard deviation, minimum, and maximum for the number of
 ## days each student visits the classroom during the first week.
 engagement_by_account = group_data(paid_engagement_in_first_week, 'account_key')
@@ -365,8 +395,10 @@ print('engagement_by_account: {}' . format(engagement_by_account))
 days_visited_by_account = sum_grouped_items(engagement_by_account, 'has_visited')
 describe_data(days_visited_by_account.values())
 
-print('\n########################\n')
-
+print('')
+print('########################')
+print('Exercicio 11')
+print('########################')
 ## Create two lists of engagement data for paid students in the first week.
 ## The first list should contain data for students who eventually pass the
 ## subway project, and the second list should contain data for students
@@ -398,9 +430,10 @@ for engagement_record in paid_engagement_in_first_week:
 print('len(passing_engagement): {}' . format(len(passing_engagement)))
 print('len(non_passing_engagement): {}' . format(len(non_passing_engagement)))
 
-
-print('\n########################\n')
-
+print('')
+print('########################')
+print('Exercicio 12')
+print('########################')
 ## Compute some metrics you're interested in and see how they differ for
 ## students who pass the subway project vs. students who don't. A good
 ## starting point would be the metrics we looked at earlier (minutes spent
@@ -443,6 +476,39 @@ print 'days visited - passing students:'
 passing_visits = sum_grouped_items(passing_engagement_by_account, 'has_visited')
 describe_data(passing_visits.values())
 
+print('')
+print('########################')
+print('Exercicio 13')
+print('########################')
+## Make histograms of the three metrics we looked at earlier for both
+## students who passed the subway project and students who didn't. You
+## might also want to make histograms of any other metrics you examined.
+print 'minutes spent - non-passing students:'
+describe_data_hist(non_passing_minutes.values())
+
+print('')
+
+print 'minutes spent - passing students:'
+describe_data_hist(passing_minutes.values())
+
+print('##')
+
+print 'lessons completed - non-passing students:'
+describe_data_hist(non_passing_lessons.values())
+
+print('')
+
+print 'lessons completed - passing students:'
+describe_data_hist(passing_lessons.values())
+
+print('##')
+
+print 'days visited - non-passing students:'
+describe_data_hist(non_passing_visits.values())
+
+print('')
+
+print 'days visited - passing students:'
+describe_data_hist(passing_visits.values())
+
 print('\n########################\n')
-
-
