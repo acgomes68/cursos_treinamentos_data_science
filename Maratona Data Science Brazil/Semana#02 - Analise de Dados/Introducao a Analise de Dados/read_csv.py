@@ -76,12 +76,15 @@ def describe_data(data):
     print 'Minimum:', np.around(np.min(data), decimals=2)
     print 'Maximum:', np.around(np.max(data), decimals=2)
 
-def describe_data_hist(data):
+def describe_data_hist(data, title, xlabel, ylabel):
     print 'Mean:', np.mean(data)
     print 'Standard deviation:', np.std(data)
     print 'Minimum:', np.min(data)
     print 'Maximum:', np.max(data)
-    plt.hist(data)
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.hist(data, bins=10)
     plt.show()
 
 print('')
@@ -483,32 +486,32 @@ print('########################')
 ## Make histograms of the three metrics we looked at earlier for both
 ## students who passed the subway project and students who didn't. You
 ## might also want to make histograms of any other metrics you examined.
-print 'minutes spent - non-passing students:'
-describe_data_hist(non_passing_minutes.values())
+print 'non-passing students - minutes spent:'
+describe_data_hist(non_passing_minutes.values(), 'non-passing students - minutes spent', 'number of minutes', 'number of students')
 
 print('')
 
-print 'minutes spent - passing students:'
-describe_data_hist(passing_minutes.values())
+print 'passing students - minutes spent:'
+describe_data_hist(passing_minutes.values(), 'passing students - minutes spent', 'number of minutes', 'number of students')
 
 print('##')
 
-print 'lessons completed - non-passing students:'
-describe_data_hist(non_passing_lessons.values())
+print 'non-passing students - lessons completed:'
+describe_data_hist(non_passing_lessons.values(), 'non-passing students - lessons completed', 'number of lessons', 'number of students')
 
 print('')
 
-print 'lessons completed - passing students:'
-describe_data_hist(passing_lessons.values())
+print 'passing students - lessons completed:'
+describe_data_hist(passing_lessons.values(), 'passing students - lessons completed', 'number of lesons', 'number of students')
 
 print('##')
 
-print 'days visited - non-passing students:'
-describe_data_hist(non_passing_visits.values())
+print 'non-passing students - days visited:'
+describe_data_hist(non_passing_visits.values(), 'non-passing students - days visited', 'number of days', 'number of students')
 
 print('')
 
-print 'days visited - passing students:'
-describe_data_hist(passing_visits.values())
+print 'passing students - days visited:'
+describe_data_hist(passing_visits.values(), 'passing students - days visited', 'number of days', 'number of students')
 
 print('\n########################\n')
