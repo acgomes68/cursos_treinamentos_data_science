@@ -1,6 +1,7 @@
 import unicodecsv
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 from datetime import datetime as dt
 from collections import defaultdict
 
@@ -86,6 +87,16 @@ def describe_data_hist(data, title, xlabel, ylabel):
     plt.ylabel(ylabel)
     plt.hist(data, bins=10)
     plt.show()
+
+def histplot(data1, data2, i, xlabel, title):
+    fig = plt.figure()
+    i = fig.add_subplot(2, 2, i)
+    i.hist([data1, data2], bins = 10, color = ['g', 'r'], alpha = 0.5, label = ['passing students', 'non-passing students'])
+    plt.xlabel(xlabel)
+    plt.ylabel('Number of students')
+    plt.title(title)
+    plt.legend()
+    plt.grid()
 
 print('')
 print('########################')
@@ -514,4 +525,33 @@ print('')
 print 'passing students - days visited:'
 describe_data_hist(passing_visits.values(), 'passing students - days visited', 'number of days', 'number of students')
 
-print('\n########################\n')
+print('')
+print('########################')
+print('Exercicio 14')
+print('########################')
+## Make a more polished version of at least one of your visualizations
+## from earlier. Try importing the seaborn library to make the visualization
+## look better, adding axis labels and a title, and changing one or more
+## arguments to the hist() function.
+# plt.hist(non_passing_visits.values(), bins=8)
+# plt.xlabel('Number of days')
+# plt.title('Distribution of classroom visits in the first week ' +
+#           'for students who do not pass the subway project')
+#
+# plt.hist(passing_visits.values(), bins=8)
+# plt.xlabel('Number of days')
+# plt.title('Distribution of classroom visits in the first week ' +
+#           'for students who pass the subway project')
+# plt.show()
+
+data1 = passing_minutes.values()
+data2 = non_passing_minutes.values()
+data3 = passing_lessons.values()
+data4 = non_passing_lessons.values()
+data5 = passing_visits.values()
+data6 = non_passing_visits.values()
+
+histplot(data1, data2, 1, 'minutes visited', 'Total minutes visited for passing X non-passing students')
+histplot(data3, data4, 2, 'lessons completed', 'Total lessons completed for passing X non-passing students')
+histplot(data5, data6, 3, 'days visited', 'Total days visited for passing X non-passing students')
+plt.show()
